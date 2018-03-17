@@ -2,12 +2,14 @@
 
 const path = require('path');
 const fs = require('fs');
+const tar = require('tar');
 const rimraf = require('rimraf');
 const execSync = require('child_process').execSync;
 const webpack = require("webpack");
 const packageJson = require('./package.json');
 const SRC_DIR = path.join(__dirname, '/src');
-const BUILD_DIR = path.join(__dirname, '/lean-build');
+const fileName = packageJson.name + '-' + packageJson.version + '-lean-build';
+const BUILD_DIR = path.join(__dirname, '/' + fileName);
 
 // 创建空的build目录
 if (fs.existsSync(BUILD_DIR)) {
@@ -103,8 +105,15 @@ function buildDeps() {
   });
 }
 
-buildApp().then(_ => {
-  buildDeps().then(_ => {
-    console.log("Build complete");
+buildApp().then(() => {
+  buildDeps().then(() => {
+    tar.c({
+      gzip: true,
+      file: fileName + '.tar.gz',
+    }, [path.relative(__dirname, BUILD_DIR)]).then(() => {
+      rimraf(BUILD_DIR, () => {
+        console.log("Build complete");
+      });
+    });
   });
 });

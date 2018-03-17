@@ -4,3 +4,4 @@ dist
 package-lock.json
 lean-build
 npm-shrinkwrap.json
+*.tar.gz
