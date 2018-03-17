@@ -47,6 +47,10 @@ function buildApp() {
         filename: '[name].js',
         libraryTarget: "window",
       },
+      plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+          compress: { warnings: false },
+        })],
     };
 
     webpack(appBuildConf, (err, stats) => {
@@ -85,6 +89,10 @@ function buildDeps() {
         filename: 'deps/[name].js',
         library: ['$deps', '[name]'],
       },
+      plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+          compress: { warnings: false },
+        })],
     };
 
     const meta = {
