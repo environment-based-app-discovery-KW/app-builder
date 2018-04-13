@@ -117,6 +117,7 @@ buildApp().then(() => {
   buildDeps().then(() => {
     tar.c({
       gzip: true,
+      portable: true,
       file: fileName + '.tar.gz',
       cwd: BUILD_DIR
     }, fs.readdirSync(BUILD_DIR)).then(() => {
