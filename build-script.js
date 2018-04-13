@@ -118,7 +118,8 @@ buildApp().then(() => {
     tar.c({
       gzip: true,
       file: fileName + '.tar.gz',
-    }, [path.relative(__dirname, BUILD_DIR)]).then(() => {
+      cwd: BUILD_DIR
+    }, fs.readdirSync(BUILD_DIR)).then(() => {
       rimraf(BUILD_DIR, () => {
         console.log("Build complete");
       });
