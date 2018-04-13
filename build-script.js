@@ -67,7 +67,7 @@ function buildDeps() {
     // 给依赖项做build
     const entry = {};
     const externals = {};
-    const deps = [];
+    const deps = {};
 
     Object.keys(shrinkWrapJson.dependencies).forEach(_ => {
       // 只有在packageJson中出现的dependency才打包
@@ -77,7 +77,7 @@ function buildDeps() {
       let ver = shrinkWrapJson.dependencies[_].version;
       let depName = _ + "_" + ver;
       entry[depName] = "./node_modules/" + _;
-      deps.push(depName);
+      deps[_] = ver;
     });
 
     const depsBuildConf = {
