@@ -8,7 +8,7 @@ const execSync = require('child_process').execSync;
 const webpack = require("webpack");
 const packageJson = require('./package.json');
 const SRC_DIR = path.join(__dirname, '/src');
-const fileName = packageJson.name + '-' + packageJson.version + '-lean-build';
+const fileName = packageJson.name + '-' + packageJson.version + '-build';
 const BUILD_DIR = path.join(__dirname, '/' + fileName);
 
 // 创建空的build目录
