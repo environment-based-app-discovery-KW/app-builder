@@ -10,6 +10,7 @@ const packageJson = require('./package.json');
 const SRC_DIR = path.join(__dirname, '/src');
 const fileName = packageJson.name + '-' + packageJson.version + '-build';
 const BUILD_DIR = path.join(__dirname, '/' + fileName);
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // 创建空的build目录
 if (fs.existsSync(BUILD_DIR)) {
@@ -47,10 +48,44 @@ function buildApp() {
         filename: '[name].js',
         libraryTarget: "window",
       },
+      resolve: {
+        extensions: ['.js', '.jsx'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader",
+            },
+          },
+          {
+            test: /\.css$/,
+            use: [
+              { loader: "style-loader" },
+              { loader: "css-loader" },
+            ],
+          },
+          {
+            test: /\.svg$/,
+            loader: 'react-svg-loader',
+          },
+          {
+            test: /\.less$/,
+            use: [{
+              loader: 'style-loader',
+            }, {
+              loader: 'css-loader',
+            }, {
+              loader: 'less-loader',
+            }],
+          },
+        ],
+      },
       plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-          compress: { warnings: false },
-        })],
+        new UglifyJsPlugin()
+      ],
     };
 
     webpack(appBuildConf, (err, stats) => {
