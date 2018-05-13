@@ -1,6 +1,6 @@
 # app-builder
 
-基于webpack的app前端构建器，能够打包出vendor分离的代码包，上传至```app-repo-server```以供使用。
+基于webpack的app前端构建器，能够打包出vendor分离的代码包，上传至```central-server```以供使用。
 
 使用方法：
 
